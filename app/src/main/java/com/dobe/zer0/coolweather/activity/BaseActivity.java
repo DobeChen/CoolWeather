@@ -6,6 +6,8 @@ import android.util.Log;
 
 /**
  * Created by dobezer0 on 2017/4/10.
+ *
+ * github url: https://github.com/DobeChen/coolweather.git
  */
 
 public class BaseActivity extends AppCompatActivity {
