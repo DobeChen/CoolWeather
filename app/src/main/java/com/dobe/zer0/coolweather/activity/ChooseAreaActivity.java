@@ -22,6 +22,11 @@ import com.dobe.zer0.coolweather.util.TransDatasUtil;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnItemClick;
+import butterknife.OnItemSelected;
+
 public class ChooseAreaActivity extends BaseActivity {
     private static final int LEVEL_PROVINCE = 0;
     private static final int LEVEL_CITY = 1;
@@ -32,8 +37,13 @@ public class ChooseAreaActivity extends BaseActivity {
 
     private int currentLevel;
 
-    private TextView titleView;
-    private ListView listView;
+    //use ButterKnife
+    @BindView(R.id.title_text)
+    TextView titleView;
+    @BindView(R.id.list_view)
+    ListView listView;
+//    private TextView titleView;
+//    private ListView listView;
     private ArrayAdapter<String> adapter;
     private List<String> dataList;
 
@@ -72,46 +82,71 @@ public class ChooseAreaActivity extends BaseActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_choose_area);
 
-        titleView = (TextView) findViewById(R.id.title_text);
-        listView = (ListView) findViewById(R.id.list_view);
+//        titleView = (TextView) findViewById(R.id.title_text);
+//        listView = (ListView) findViewById(R.id.list_view);
+        //use ButterKnife
+        ButterKnife.bind(this);
 
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
 
         listView.setAdapter(adapter);
 
         //init listeners
-        initListeners();
+//        initListeners();
 
         //show all provinces in listview
         queryAllProvinces();
     }
 
-    private void initListeners() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (currentLevel == LEVEL_PROVINCE) {
+    @OnItemClick(R.id.list_view)
+    private void clickItemInListView(AdapterView<?> parent, View view, int position, long i) {
+        if (currentLevel == LEVEL_PROVINCE) {
                     /*
                     all provinces in listview
                     get selected province
                     show all cities in listview
                      */
-                    selectedProvince = provinceList.get(position);
+            selectedProvince = provinceList.get(position);
 
-                    queryAllCities();
-                } else if (currentLevel == LEVEL_CITY) {
+            queryAllCities();
+        } else if (currentLevel == LEVEL_CITY) {
                     /*
                     all cities in listview
                     get selected city
                     show all counties in listview
                      */
-                    selectedCity = cityList.get(position);
+            selectedCity = cityList.get(position);
 
-                    queryAllCounties();
-                }
-            }
-        });
+            queryAllCounties();
+        }
     }
+
+//    private void initListeners() {
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                if (currentLevel == LEVEL_PROVINCE) {
+//                    /*
+//                    all provinces in listview
+//                    get selected province
+//                    show all cities in listview
+//                     */
+//                    selectedProvince = provinceList.get(position);
+//
+//                    queryAllCities();
+//                } else if (currentLevel == LEVEL_CITY) {
+//                    /*
+//                    all cities in listview
+//                    get selected city
+//                    show all counties in listview
+//                     */
+//                    selectedCity = cityList.get(position);
+//
+//                    queryAllCounties();
+//                }
+//            }
+//        });
+//    }
 
     //query all provinces from db and init listview, titleview
     private void queryAllProvinces() {
