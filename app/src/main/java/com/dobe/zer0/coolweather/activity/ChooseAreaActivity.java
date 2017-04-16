@@ -3,6 +3,7 @@ package com.dobe.zer0.coolweather.activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import com.dobe.zer0.coolweather.util.HttpCallbackListener;
 import com.dobe.zer0.coolweather.util.HttpUtil;
 import com.dobe.zer0.coolweather.util.TransDatasUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,7 +44,7 @@ public class ChooseAreaActivity extends BaseActivity {
     TextView titleView;
     @BindView(R.id.list_view)
     ListView listView;
-//    private TextView titleView;
+    //    private TextView titleView;
 //    private ListView listView;
     private ArrayAdapter<String> adapter;
     private List<String> dataList;
@@ -87,9 +89,12 @@ public class ChooseAreaActivity extends BaseActivity {
         //use ButterKnife
         ButterKnife.bind(this);
 
+        dataList = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList);
 
         listView.setAdapter(adapter);
+
+        coolWeatherDB = CoolWeatherDB.getInstance(this);
 
         //init listeners
 //        initListeners();
@@ -169,12 +174,12 @@ public class ChooseAreaActivity extends BaseActivity {
             listView.setSelection(0);
             //init titleview
             titleView.setText("中国");
-
-            //when back will use currentLevel
-            currentLevel = LEVEL_PROVINCE;
         } else {
             queryDatasFromServer(null, "province");
         }
+
+        //when back will use currentLevel
+        currentLevel = LEVEL_PROVINCE;
     }
 
     //query all cities from db and init listview, titlevie
@@ -198,12 +203,12 @@ public class ChooseAreaActivity extends BaseActivity {
             listView.setSelection(0);
             //init titleview
             titleView.setText(selectedProvince.getProvinceName());
-
-            //when back will use currentLevel
-            currentLevel = LEVEL_CITY;
         } else {
             queryDatasFromServer(selectedProvince.getProvinceCode(), "city");
         }
+
+        //when back will use currentLevel
+        currentLevel = LEVEL_CITY;
     }
 
     //query all counties from db and init listview, titlevie
@@ -226,13 +231,14 @@ public class ChooseAreaActivity extends BaseActivity {
             //listview init selected first item
             listView.setSelection(0);
             //init titleview
-            titleView.setText(selectedCity.getCityId());
+            titleView.setText(selectedCity.getCityName());
 
-            //when back will use currentLevel
-            currentLevel = LEVEL_COUNTY;
         } else {
             queryDatasFromServer(selectedCity.getCityCode(), "county");
         }
+
+        //when back will use currentLevel
+        currentLevel = LEVEL_COUNTY;
     }
 
     //query datas from server
@@ -325,14 +331,12 @@ public class ChooseAreaActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
         if (currentLevel == LEVEL_COUNTY) {
             queryAllCities();
         } else if (currentLevel == LEVEL_CITY) {
             queryAllProvinces();
         } else {
-            finish();
+            this.finish();
         }
     }
 }
