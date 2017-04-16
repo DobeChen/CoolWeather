@@ -99,7 +99,7 @@ public class ChooseAreaActivity extends BaseActivity {
     }
 
     @OnItemClick(R.id.list_view)
-    private void clickItemInListView(AdapterView<?> parent, View view, int position, long i) {
+    public void clickItemInListView(AdapterView<?> parent, View view, int position, long i) {
         if (currentLevel == LEVEL_PROVINCE) {
                     /*
                     all provinces in listview
