@@ -116,13 +116,13 @@ public class TransDatasUtil {
             JSONObject weatherInfo = jsonObject.getJSONObject("weatherinfo");
 
             String cityName = weatherInfo.getString("city");
-            String cityId = weatherInfo.getString("cityid");
+            String weatherCode = weatherInfo.getString("cityid");
             String minTemp = weatherInfo.getString("temp1");
             String maxTemp = weatherInfo.getString("temp2");
             String weatherDesc = weatherInfo.getString("weather");
             String publishTime = weatherInfo.getString("ptime");
 
-            saveWeatherInfo(context, cityName, cityId, publishTime, weatherDesc, minTemp, maxTemp);
+            saveWeatherInfo(context, cityName, weatherCode, publishTime, weatherDesc, minTemp, maxTemp);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -134,7 +134,7 @@ public class TransDatasUtil {
      * currentTime
      * ?citySelected
      */
-    public static void saveWeatherInfo(Context context, String cityName, String cityId, String publishTime, String weatherDesc, String minTemp, String maxTemp) {
+    public static void saveWeatherInfo(Context context, String cityName, String weatherCode, String publishTime, String weatherDesc, String minTemp, String maxTemp) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
 
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -142,7 +142,7 @@ public class TransDatasUtil {
         editor.putBoolean("city_selected", true);
 
         editor.putString("city_name", cityName);
-        editor.putString("city_id", cityId);
+        editor.putString("weather_code", weatherCode);
         editor.putString("publish_time", publishTime);
         editor.putString("weather_desc", weatherDesc);
         editor.putString("min_temp", minTemp);

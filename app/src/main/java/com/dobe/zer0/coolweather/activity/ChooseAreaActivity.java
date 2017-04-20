@@ -81,16 +81,24 @@ public class ChooseAreaActivity extends BaseActivity {
      */
     private City selectedCity;
 
+    /*
+    is from weather layout falg
+     */
+    private boolean isFromWeatherLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        isFromWeatherLayout = getIntent().getBooleanExtra("from_weather_layout", false);
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if(preferences.getBoolean("city_selected", false)){
+        if((preferences.getBoolean("city_selected", false)) && !isFromWeatherLayout){
             Intent intent = new Intent(this, WeatherLayoutActivity.class);
             startActivity(intent);
 
-//            finish();
+            finish();
+            return;
         }
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -359,7 +367,13 @@ public class ChooseAreaActivity extends BaseActivity {
         } else if (currentLevel == LEVEL_CITY) {
             queryAllProvinces();
         } else {
-            this.finish();
+            if(isFromWeatherLayout){
+                Intent intent = new Intent(this, WeatherLayoutActivity.class);
+
+                startActivity(intent);
+            }
+
+            finish();
         }
     }
 }

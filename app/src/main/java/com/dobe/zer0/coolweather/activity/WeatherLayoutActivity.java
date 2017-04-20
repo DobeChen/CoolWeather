@@ -1,5 +1,6 @@
 package com.dobe.zer0.coolweather.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -7,6 +8,7 @@ import android.support.annotation.UiThread;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class WeatherLayoutActivity extends BaseActivity {
     private static final String COUNTY_SERVER_ADDRESS = "http://www.weather.com.cn/data/list3/city";
@@ -33,6 +36,9 @@ public class WeatherLayoutActivity extends BaseActivity {
 
     @BindViews({R.id.city_name, R.id.publish_text, R.id.current_date, R.id.weather_info, R.id.min_temp, R.id.max_temp})
     List<TextView> textViews;
+
+    @BindViews({R.id.back_button, R.id.refresh_button})
+    List<Button> buttons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,26 @@ public class WeatherLayoutActivity extends BaseActivity {
             //show info from SharedPreferences
             showWeatherInfo();
         }
+    }
+
+    @OnClick(R.id.back_button)
+    public void backOnClick(){
+        Intent intent = new Intent(this, ChooseAreaActivity.class);
+
+        intent.putExtra("from_weather_layout", true);
+        startActivity(intent);
+
+        finish();
+    }
+
+    @OnClick(R.id.refresh_button)
+    public void refreshOnClick(){
+        textViews.get(1).setText("Loading...");
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String weatherCode = preferences.getString("weather_code", "");
+
+        getWeatherInfo(weatherCode);
     }
 
     /**
