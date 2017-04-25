@@ -135,7 +135,7 @@ public class TransDatasUtil {
      * ?citySelected
      */
     public static void saveWeatherInfo(Context context, String cityName, String weatherCode, String publishTime, String weatherDesc, String minTemp, String maxTemp) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         //had city been selected last time

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.UiThread;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dobe.zer0.coolweather.R;
+import com.dobe.zer0.coolweather.service.AutoUpdateService;
 import com.dobe.zer0.coolweather.util.HttpCallbackListener;
 import com.dobe.zer0.coolweather.util.HttpUtil;
 import com.dobe.zer0.coolweather.util.TransDatasUtil;
@@ -60,6 +60,9 @@ public class WeatherLayoutActivity extends BaseActivity {
 
             getWeatherInfoCode(countyCode);
         } else {
+            Intent serviceIntent = new Intent(this, AutoUpdateService.class);
+            startService(serviceIntent);
+
             //show info from SharedPreferences
             showWeatherInfo();
         }
