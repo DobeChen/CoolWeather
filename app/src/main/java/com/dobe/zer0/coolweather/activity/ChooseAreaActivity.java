@@ -47,8 +47,7 @@ public class ChooseAreaActivity extends BaseActivity {
     TextView titleView;
     @BindView(R.id.list_view)
     ListView listView;
-    //    private TextView titleView;
-//    private ListView listView;
+
     private ArrayAdapter<String> adapter;
     private List<String> dataList;
 
@@ -153,36 +152,9 @@ public class ChooseAreaActivity extends BaseActivity {
             intent.putExtra("conunty_code", countyCode);
 
             startActivity(intent);
-//            finish();
+            finish();
         }
     }
-
-//    private void initListeners() {
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                if (currentLevel == LEVEL_PROVINCE) {
-//                    /*
-//                    all provinces in listview
-//                    get selected province
-//                    show all cities in listview
-//                     */
-//                    selectedProvince = provinceList.get(position);
-//
-//                    queryAllCities();
-//                } else if (currentLevel == LEVEL_CITY) {
-//                    /*
-//                    all cities in listview
-//                    get selected city
-//                    show all counties in listview
-//                     */
-//                    selectedCity = cityList.get(position);
-//
-//                    queryAllCounties();
-//                }
-//            }
-//        });
-//    }
 
     //query all provinces from db and init listview, titleview
     private void queryAllProvinces() {
@@ -209,7 +181,7 @@ public class ChooseAreaActivity extends BaseActivity {
             queryDatasFromServer(null, "province");
         }
 
-        //when back will use currentLevel
+        //when back_normal will use currentLevel
         currentLevel = LEVEL_PROVINCE;
     }
 
@@ -238,7 +210,7 @@ public class ChooseAreaActivity extends BaseActivity {
             queryDatasFromServer(selectedProvince.getProvinceCode(), "city");
         }
 
-        //when back will use currentLevel
+        //when back_normal will use currentLevel
         currentLevel = LEVEL_CITY;
     }
 
@@ -268,7 +240,7 @@ public class ChooseAreaActivity extends BaseActivity {
             queryDatasFromServer(selectedCity.getCityCode(), "county");
         }
 
-        //when back will use currentLevel
+        //when back_normal will use currentLevel
         currentLevel = LEVEL_COUNTY;
     }
 

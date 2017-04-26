@@ -16,10 +16,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:text="B"/>
+            android:background="@drawable/back_btn_style"/>
 
         <TextView
             android:id="@+id/city_name"
@@ -36,10 +33,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:text="R"/>
+            android:background="@drawable/refresh_btn_style"/>
     </RelativeLayout>
 
     <RelativeLayout
